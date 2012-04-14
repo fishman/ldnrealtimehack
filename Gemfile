@@ -6,7 +6,7 @@ gem 'sqlite3'
 group :production do
   gem 'mysql2'
   gem 'cloudfoundry-jquery-rails'
-  gem 'postmark-rails', :git => 'git://github.com/langalex/postmark-rails.git'
+  gem 'fishman-postmark-rails', :require => 'postmark-rails'
 end
 group :assets do
   gem 'sass-rails',   '~> 3.1.5'
@@ -45,7 +45,7 @@ gem "devise_invitable", ">= 1.0.1"
 gem "cancan", ">= 1.6.7"
 gem "rolify", ">= 3.1.0"
 gem "simple_form"
-gem "rails-footnotes", ">= 3.7", :group => :development
+# gem "rails-footnotes", ">= 3.7", :group => :development
 gem "will_paginate", ">= 3.0.3"
 
 # realtime hackathon
