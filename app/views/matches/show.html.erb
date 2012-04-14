@@ -1,0 +1,116 @@
+<h1>Pong.</h1>
+<table>
+  <caption>Scores</caption>
+  <thead>
+    <tr>
+      <th class="player1">Player 1</th>
+      <th class="player2">Player 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="score_player1"></td>
+      <td id="score_player2"></td>
+    </tr>
+  </tbody>
+</table>
+<canvas id="pong" width="800" height="600">
+<p>
+Upgrade your browser!
+</p>
+</canvas>
+<p>Move mouse up and down to play, click to reset.</p>
+<p>
+<a href="http://github.com/camelpunch/pong">Source</a> |
+</p>
+<script type="text/javascript" charset="utf-8" src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script>
+  var playerId = <%= @player_id %>;
+
+  Pusher.log = function(msg) {
+    if(console && console.log) {
+      console.log(msg);
+    }
+  };
+
+  var pusher = new Pusher("<%= Pusher.key %>");
+  var socketId = null;
+
+
+  /* check if connected */
+  pusher.connection.bind('connected', function() {
+  });
+
+  /* bind disconnected event */
+  pusher.connection.bind('disconnected', function() {
+    socketId = null;
+  });
+
+  /* subscribe to presence channel for a match */
+  var channel = pusher.subscribe('presence-match-<%= @match.unique_id %>');
+
+  /* subscription succeeded, check if i'm the first user */
+  channel.bind('pusher_internal:subscription_succeeded', function(data) {
+    socketId = pusher.connection.socket_id;
+    if(data.presence.count == 1){
+      /* member joined the match */
+      channel.bind('pusher:member_added', function(data) {
+        window.PONG.startRound();
+      });
+    }
+    else {
+      window.PONG.startRound();
+    }
+  });
+  channel.bind('message_received', function(data) {
+    alert(data.message);
+  });
+
+  channel.bind('client-mouse-moved', function(data) {
+    /*TODO: check return type of data, but fuck it's 4:30 am i'm not gonna do that now */
+
+          console.log('hello world  ' + playerId);
+    if (playerId == 1){
+      window.PONG.paddle2.setY(data["y"]);
+    }
+    else {
+      window.PONG.paddle1.setY(data["y"]);
+    }
+  });
+
+  function send_position(currentY) {
+    if (socketId != null){
+      channel.trigger("client-mouse-moved", {y: currentY});
+    }
+  }
+
+  function init() {
+    $('#triggerBtn').click(handleTrigger);
+  };
+
+  function handleTrigger() {
+    var data = {
+      message: 'hello world'
+    };
+
+    if( $("#excludeMe").is(':checked') ) {
+      data.socket_id = socketId; // pass socket_id parameter to be used by server
+    }
+
+    jQuery.ajax({
+      url: "/trigger_event",
+      type: "post",
+      data: data
+    });
+  };
+
+  setInterval(function(){
+    if(state.currentY !== state.lastY){
+      state.lastY = state.currentY;
+
+      send_position(state.currentY);
+    }
+  }, 100); // send every 100 milliseconds if position has changed
+</script>
+<%= javascript_include_tag "pong" %>
+
