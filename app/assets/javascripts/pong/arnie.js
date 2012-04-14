@@ -97,7 +97,7 @@ window.ARNIE = (function () {
 
             Y.fire('arnie:reset');
 
-            intervalId = window.setInterval(update, 20);
+            intervalId = window.setInterval(update, 50);
         };
 
         return {

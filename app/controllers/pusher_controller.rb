@@ -3,7 +3,9 @@ class PusherController < ApplicationController
 
   def auth
     if current_user
-      response = Pusher[params[:channel_name]].authenticate(params[:socket_id])
+      response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
+        :user_id => current_user.id
+      })
       render :json => response
     else
       head :forbidden

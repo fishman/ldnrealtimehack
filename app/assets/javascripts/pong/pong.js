@@ -96,8 +96,8 @@ YUI().use('node', 'event-custom', function (Y) {
             }
             ball.place(paddle1.right + 1, 1);
 
-            ball.xPixelsPerTick = 10;
-            ball.yPixelsPerTick = 11;
+            ball.xPixelsPerTick = 30;
+            ball.yPixelsPerTick = 31;
 
             Y.one('#score_player1').setContent(player1.score);
             Y.one('#score_player2').setContent(player2.score);
