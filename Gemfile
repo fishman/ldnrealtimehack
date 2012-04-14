@@ -3,15 +3,21 @@ HOST_OS = RbConfig::CONFIG['host_os']
 source 'http://rubygems.org'
 gem 'rails', '3.1.4'
 gem 'sqlite3'
+group :production do
+  gem 'mysql2'
+  gem 'cloudfoundry-jquery-rails'
+  gem 'postmark'
+  gem 'postmark', :git => 'git://github.com/langalex/postmark-rails.git'
+end
 group :assets do
   gem 'sass-rails',   '~> 3.1.5'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
 end
 group :development do
-  # gem 'jquery-rails'
-  gem 'cloudfoundry-jquery-rails'
+  gem 'jquery-rails'
 end
+gem "twitter-bootstrap-rails", ">= 2.0.3", :group => :assets 
 group :test do
   gem 'turn', '0.8.2', :require => false
 end
@@ -39,7 +45,6 @@ gem "devise", ">= 2.1.0.rc"
 gem "devise_invitable", ">= 1.0.1"
 gem "cancan", ">= 1.6.7"
 gem "rolify", ">= 3.1.0"
-gem "twitter-bootstrap-rails", ">= 2.0.3", :group => :assets 
 gem "simple_form"
 gem "rails-footnotes", ">= 3.7", :group => :development
 gem "will_paginate", ">= 3.0.3"
@@ -48,7 +53,7 @@ gem "will_paginate", ">= 3.0.3"
 gem "nifty-generators"
 gem "pusher"
 gem "twilio"
-gem 'mysql2', '~> 0.2.7'
+
 
 gem 'bunny'
 gem 'json'
