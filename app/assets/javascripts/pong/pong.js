@@ -1,6 +1,15 @@
 /*global window, YUI, ARNIE, PONG */
 "use strict";
 
+var state = {
+  currentY: 0,
+  lastY: undefined,
+  player: 1
+};
+
+
+
+
 YUI().use('node', 'event-custom', function (Y) {
     window.PONG = (function () {
         var canvas = window.document.getElementById('pong'),
@@ -61,17 +70,17 @@ YUI().use('node', 'event-custom', function (Y) {
         }),
 
         paddle2 = game.sprite('paddle2', paddle1),
-        
+
         top = game.sprite('top', {
             width: canvas.width,
             height: 1
         }),
-            
+
         bottom = game.sprite('bottom', {
             width: canvas.width,
             height: 1
         }),
-        
+
         left = game.sprite('left', {
             width: 1,
             height: canvas.height
@@ -81,7 +90,7 @@ YUI().use('node', 'event-custom', function (Y) {
             width: 1,
             height: canvas.height
         }),
-            
+
         startRound = function () {
             if (ball.placed()) {
                 ball.clear();
@@ -98,7 +107,7 @@ YUI().use('node', 'event-custom', function (Y) {
         paddle1.place(0, 0);
         paddle2.fillStyle = 'red';
         paddle2.place(
-            canvas.width - paddle2.width, 
+            canvas.width - paddle2.width,
             canvas.height - paddle2.height
         );
 
@@ -150,8 +159,14 @@ YUI().use('node', 'event-custom', function (Y) {
         });
 
         Y.on('mousemove', function (e) {
-            paddle1.setY(e.clientY - (paddle1.height / 2));
-            paddle2.setY(600 - e.clientY - (paddle2.height / 2));
+          if (state.player == 1) {
+            state.currentY = e.clientY - (paddle1.height / 2);
+            paddle1.setY(state.currentY);
+          }
+          else {
+            state.currentY = e.clientY - (paddle2.height / 2);
+            paddle2.setY(state.currentY);
+          }
         });
 
         return {
@@ -176,4 +191,13 @@ YUI().use('node', 'event-custom', function (Y) {
 
         PONG.game.reset();
     });
+
+    setInterval(function(){
+      if(state.currentY !== state.lastY){
+        state.lastY = state.currentY;
+
+        console.log(state.currentY);
+        send_position(state.currentY);
+      }
+    }, 100); // send every 100 milliseconds if position has changed
 });

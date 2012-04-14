@@ -6,4 +6,6 @@ Realtime::Application.routes.draw do
   devise_for :users
   resources :users, :only => [:show, :index]
   resources :games
+
+  match 'pusher/auth' => 'pusher#auth'
 end

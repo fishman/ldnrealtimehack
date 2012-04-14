@@ -40,3 +40,8 @@ gem "twitter-bootstrap-rails", ">= 2.0.3", :group => :assets
 gem "simple_form"
 gem "rails-footnotes", ">= 3.7", :group => :development
 gem "will_paginate", ">= 3.0.3"
+
+# realtime hackathon
+gem "nifty-generators"
+gem "pusher"
+gem "twilio"
