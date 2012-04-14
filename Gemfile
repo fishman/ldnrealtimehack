@@ -6,8 +6,7 @@ gem 'sqlite3'
 group :production do
   gem 'mysql2'
   gem 'cloudfoundry-jquery-rails'
-  gem 'postmark'
-  gem 'postmark', :git => 'git://github.com/langalex/postmark-rails.git'
+  gem 'postmark-rails', :git => 'git://github.com/langalex/postmark-rails.git'
 end
 group :assets do
   gem 'sass-rails',   '~> 3.1.5'
@@ -53,7 +52,6 @@ gem "will_paginate", ">= 3.0.3"
 gem "nifty-generators"
 gem "pusher"
 gem "twilio"
-
 
 gem 'bunny'
 gem 'json'

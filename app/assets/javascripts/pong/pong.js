@@ -4,7 +4,6 @@
 var state = {
   currentY: 0,
   lastY: undefined,
-  player: 1
 };
 
 
@@ -155,11 +154,11 @@ YUI().use('node', 'event-custom', function (Y) {
         });
 
         Y.on('arnie:reset', function () {
-            startRound();
+            // startRound();
         });
 
         Y.on('mousemove', function (e) {
-          if (state.player == 1) {
+          if (playerId == 1) {
             state.currentY = e.clientY - (paddle1.height / 2);
             paddle1.setY(state.currentY);
           }
@@ -192,12 +191,5 @@ YUI().use('node', 'event-custom', function (Y) {
         PONG.game.reset();
     });
 
-    setInterval(function(){
-      if(state.currentY !== state.lastY){
-        state.lastY = state.currentY;
-
-        console.log(state.currentY);
-        send_position(state.currentY);
-      }
-    }, 100); // send every 100 milliseconds if position has changed
 });
+
