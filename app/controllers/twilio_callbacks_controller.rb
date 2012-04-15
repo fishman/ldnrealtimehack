@@ -1,0 +1,2 @@
+class TwilioCallbacksController < ApplicationController
+end
