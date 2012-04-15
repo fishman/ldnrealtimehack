@@ -29,11 +29,11 @@
 </div>
 
 <script>
-  Pusher.log = function(msg) {
-    if(console && console.log) {
-      console.log(msg);
-    }
-  };
+  <%# Pusher.log = function(msg) { %>
+  <%#   if(console && console.log) { %>
+  <%#     console.log(msg); %>
+  <%#   } %>
+  <%# }; %>
 
   var pusher = new Pusher("<%= Pusher.key %>");
   var socketId = null;
