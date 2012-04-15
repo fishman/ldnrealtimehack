@@ -1,0 +1,10 @@
+{
+  "item":[
+  <% @wins.each do |win| %>
+    {
+      "value": <%= win.count %>,
+      "text": <%= win.user.login %>
+    }
+  <% end -%>
+  ]
+}
