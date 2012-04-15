@@ -57,5 +57,7 @@ gem "twilio"
 
 gem 'bunny'
 gem 'json'
+# gem 'jbuilder'
+gem "rabl"
 
 # gem 'ember-rails'

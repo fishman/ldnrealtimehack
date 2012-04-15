@@ -1,7 +1,11 @@
 class LeaderBoardsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :only => :create
+  respond_to :json
+
   def index
-    @wins = Win.order('count desc').all
+    @wins = Win.order('count desc').limit(3).all
+
+    respond_with @wins
   end
 
   def create
