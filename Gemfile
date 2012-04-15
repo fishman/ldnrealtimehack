@@ -59,4 +59,3 @@ gem 'bunny'
 gem 'json'
 
 # gem 'ember-rails'
-gem 'mongoid'

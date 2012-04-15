@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
 
   def create
     if params[:message].present?
-      message = Message.new(:name => current_user.login, :content => params[:message])
+      message = Message.new(:owner => current_user.login, :content => params[:message])
       if message.save
         Pusher['ldnrealtime'].trigger('message_received', {:message => "@#{current_user.login}: #{params[:message]}"})
       end

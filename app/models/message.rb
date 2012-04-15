@@ -1,7 +1,2 @@
-class Message
-  include Mongoid::Document
-
-  field :name, type: String
-  field :content, type: String
-
+class Message < ActiveRecord::Base
 end

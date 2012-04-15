@@ -11,12 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414221002) do
+ActiveRecord::Schema.define(:version => 20120415025813) do
 
   create_table "matches", :force => true do |t|
     t.integer  "player1_id"
     t.integer  "player2_id"
     t.string   "unique_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.string   "owner"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
