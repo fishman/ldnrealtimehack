@@ -7,9 +7,8 @@
     </li>
   <% else %>
     <li>
-    <% if true %>
-      <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %>
-    <% else %>
+    <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %>
+    <% if Rails.env.development? %>
       <%= link_to('Login', new_user_session_path)  %>  
     <% end -%>
     </li>

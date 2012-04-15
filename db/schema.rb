@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120415044932) do
+ActiveRecord::Schema.define(:version => 20120415060608) do
 
   create_table "matches", :force => true do |t|
     t.integer  "player1_id"
@@ -77,5 +77,14 @@ ActiveRecord::Schema.define(:version => 20120415044932) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "wins", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "count"
+  end
+
+  add_index "wins", ["count"], :name => "index_wins_on_count"
 
 end

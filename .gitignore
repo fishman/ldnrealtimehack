@@ -74,3 +74,6 @@ db/*.sqlite3
 
 # vim artifacts
 **.swp
+
+# tutorials
+pusher-examples/
