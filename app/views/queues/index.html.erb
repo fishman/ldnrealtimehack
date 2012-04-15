@@ -43,6 +43,13 @@
     socketId = null;
   });
   var channel = pusher.subscribe('ldnrealtime');
+  var priv_channel = pusher.subscribe('private-user-<%= current_user.id %>');
+
+  priv_channel.bind('queue_match', function(data) {
+    loc = "/matches/" + data.match_id;
+    window.location.href = loc ;
+  });
+
   channel.bind('pusher:subscription_succeeded', function(data) {
     socketId = pusher.connection.socket_id;
   });
