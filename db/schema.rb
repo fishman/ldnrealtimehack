@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414090200) do
+ActiveRecord::Schema.define(:version => 20120414221002) do
 
   create_table "matches", :force => true do |t|
     t.integer  "player1_id"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20120414090200) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.string   "login"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

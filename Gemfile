@@ -42,6 +42,8 @@ gem "guard-livereload", ">= 0.3.0", :group => :development
 gem "guard-rspec", ">= 0.4.3", :group => :development
 gem "devise", ">= 2.1.0.rc"
 gem "devise_invitable", ">= 1.0.1"
+gem "omniauth"
+gem "omniauth-twitter"
 gem "cancan", ">= 1.6.7"
 gem "rolify", ">= 3.1.0"
 gem "simple_form"
@@ -55,3 +57,6 @@ gem "twilio"
 
 gem 'bunny'
 gem 'json'
+
+# gem 'ember-rails'
+gem 'mongoid'

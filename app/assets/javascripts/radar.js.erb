@@ -1,0 +1,78 @@
+$(function(){
+	
+	// Demo API key and site token. Data kindly provided by Poolga (poolga.com)
+	// Change these to your own API key and site token.
+	var API_KEY = 'demo';
+	var SITE_TOKEN = 'GSN-181546-E';
+	
+	var visitors = {};
+	
+	setInterval(function(){
+		$.getJSON('http://api.gosquared.com/geo?callback=?',{
+			api_key:API_KEY,
+			site_token:SITE_TOKEN,
+			geoLimit:100
+		},function(data){
+			// Store the visitor data in the local variable
+			visitors = data.geo;
+		});
+	},2000);
+	
+	var raph = Raphael($('#radar-area').get(0),400,400);
+	var img = raph.image(<%= asset_path('sweep.png') %>,-100,-100,600,600);
+
+	// Use Raphael to draw the concentric range circles. More efficient than doing them with CSS
+	for(i=1;i<=5;i++){
+		var rad = i*50;
+		raph.circle(200,200,rad).attr({
+			'fill':'none',
+			stroke:'#8f8',
+			'stroke-opacity':.5
+		})
+	}
+	
+	// Sweep the radar scan line through one revolution
+	function sweep(){
+		$({a:0}).animate({a:1},{
+			duration:5000,
+			step:function(){
+				sweepStep(this.a);
+				// Compensation of -.125 to make the image line up with the angle
+				img.rotate(360*(this.a),true);
+			},
+			// Call the same function on complete, so the animation loops
+			complete:sweep,
+			easing:'linear'
+		});
+	}
+	var sweepAngle = 0;
+	function sweepStep(amount){
+		if(sweepAngle>amount)sweepAngle-=1;
+
+		for(var a in visitors){
+			
+			var v = visitors[a];
+			var lat = v.lat, lon = v.lon;
+			
+			// slight compensation as the background image is slightly off-centre
+			lat -= 16;
+			lon += 3;
+			
+			// Work out at what angle the visitor actually is
+			var angle = Math.atan(lon/lat)+Math.PI*+(lat<0);
+			angle+=2*Math.PI*+(angle<0);
+			angle/=2*Math.PI;
+			if(angle>amount)angle-=1;
+			
+			// And if the visitor is in the segment we just swept, light them up
+			if(sweepAngle<angle){
+				var x = 200+lon*330/180;
+				var y = 200-lat*165/90;
+				var c = raph.circle(x,y,3);
+				c.attr({fill:'#8f8',stroke:'none'}).animate({opacity:0},5000,function(){this.remove()});
+			}
+		}
+		sweepAngle=amount;
+	}
+	sweep();
+})

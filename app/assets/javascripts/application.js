@@ -7,6 +7,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require dist/pusher.min
+//= require dist/raphael-min
 //= require bootstrap
 //= require home
 //= require users

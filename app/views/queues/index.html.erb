@@ -1,5 +1,22 @@
+<div class="span12">
+  <center><h2>Pong waiting room, click below to wait in queue</h2></center>
+</div>
+<div class="span5">
+  <h3>Chat</h3>
+  <%= form_tag messages_path, :remote => true do %>
+    <%= text_field_tag :message %>
+    <%= submit_tag "Send" %>
+  <% end %>
+  <ul id="content">
 
-Waiting for connection ...
+  </ul>
+</div>
+<div class="span7">
+  <%= link_to add_queues_path,:remote=>true do %>
+    hello world what's up dude
+  <% end -%>
+</div>
+
 <script>
   Pusher.log = function(msg) {
     if(console && console.log) {
@@ -14,47 +31,12 @@ Waiting for connection ...
   pusher.connection.bind('disconnected', function() {
     socketId = null;
   });
-  var channel = pusher.subscribe('private-channel');
+  var channel = pusher.subscribe('ldnrealtime');
   channel.bind('pusher:subscription_succeeded', function(data) {
     socketId = pusher.connection.socket_id;
   });
   channel.bind('message_received', function(data) {
-    alert(data.message);
+    $("ul#content").prepend('<li>'+data.message+'</li>');
   });
 
-  channel.bind('client-mouse-moved', function(data) {
-    /*TODO: check return type of data, but fuck it's 4:30 am i'm not gonna do that now */
-    if (state.player == 1){
-      window.PONG.paddle2.setY(data["y"]);
-    }
-    else {
-      window.PONG.paddle1.setY(data["y"]);
-    }
-  });
-
-  function send_position(currentY) {
-    if (socketId != null){
-      channel.trigger("client-mouse-moved", {y: currentY});
-    }
-  }
-
-  function init() {
-    $('#triggerBtn').click(handleTrigger);
-  };
-
-  function handleTrigger() {
-    var data = {
-      message: 'hello world'
-    };
-
-    if( $("#excludeMe").is(':checked') ) {
-      data.socket_id = socketId; // pass socket_id parameter to be used by server
-    }
-
-    jQuery.ajax({
-      url: "/trigger_event",
-      type: "post",
-      data: data
-    });
-  };
 </script>

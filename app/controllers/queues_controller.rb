@@ -5,6 +5,11 @@ class QueuesController < ApplicationController
     # see if someone is already in the queue waiting for 
     # us to be connected
     msg = ApplicationController.messages_queue.pop
+    # TODO: hacketihack, if the last message was pushed by myself keep pulling
+    while (msg[:payload] != :queue_empty && msg[:payload].to_i == current_user.id)
+      msg = ApplicationController.messages_queue.pop
+    end
+
     # Show the user what we got
     if msg[:payload].present? && msg[:payload] != :queue_empty
       match = Match.create(:player1_id => msg[:payload].to_i, :player2_id => current_user.id)
@@ -16,8 +21,11 @@ class QueuesController < ApplicationController
       ApplicationController.nameless_exchange.publish current_user.id,
         :key => "messages"
       # Notify the user that we published.
-      render :text => "everything is ok dude"
     end
+
+  end
+
+  def add
 
   end
 
