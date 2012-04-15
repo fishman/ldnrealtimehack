@@ -1,0 +1,5 @@
+Leaderboard<br>
+<br>
+<% @wins.each do |win| %>
+  <%= win.user.login %>:  <%= win.count %>
+<% end -%>

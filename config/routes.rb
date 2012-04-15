@@ -19,6 +19,7 @@ Realtime::Application.routes.draw do
   end
   resources :messages
   resources :matches
+  resources :leader_boards
 
   match 'pusher/auth' => 'pusher#auth'
 end

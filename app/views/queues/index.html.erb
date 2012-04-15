@@ -9,6 +9,9 @@
   <% end %>
   <div class="well" style="overflow:auto; height:200px;">
   <ul id="content" class="unstyled">
+    <% @messages.each do |message| %>
+      <li><a href='http://twitter.com/<%= message.owner %>'>@<%= message.owner %></a>: <%= message.content %></li>
+    <% end -%>
   </ul>
   </div>
 </div>

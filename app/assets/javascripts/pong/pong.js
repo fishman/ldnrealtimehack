@@ -4,8 +4,10 @@
 var state = {
   currentY: 0,
   lastY: undefined,
+  p1score: 0,
+  p2score: 0,
+  syncBlock: undefined
 };
-
 
 
 
@@ -21,6 +23,11 @@ YUI().use('node', 'event-custom', function (Y) {
         player2 = {
             score: 0
         },
+
+        ping = undefined,/* pong is the response we get from the right side */
+        pong = undefined,/* ping is the response we get from the left side */
+        defaultTimeout = 10,
+
 
         ball = game.sprite('ball', {
             detectCollisions: true,
@@ -99,8 +106,8 @@ YUI().use('node', 'event-custom', function (Y) {
             ball.xPixelsPerTick = 25;
             ball.yPixelsPerTick = 26;
 
-            Y.one('#score_player1').setContent(player1.score);
-            Y.one('#score_player2').setContent(player2.score);
+            Y.one('#score_player1').setContent(state.p1score);
+            Y.one('#score_player2').setContent(state.p2score);
         };
 
         paddle1.place(0, 0);
@@ -125,23 +132,53 @@ YUI().use('node', 'event-custom', function (Y) {
         ball.on('arnie:collision', function (other) {
             switch (other) {
             case paddle1:
+                ping = true;
                 this.reverseX();
                 this.place(other.right, this.y);
                 break;
             case paddle2:
+                pong = true;
                 this.reverseX();
                 this.place(other.left - this.width, this.y);
                 break;
             case left:
-                player2.score += 1;
-                startRound();
+                // set the ping state as undefined
+                ping = undefined;
+                // after 10 miliseconds check if the nothing happened,
+                // only then assume that the other side didn't actually catch it
+                setTimeout(function(){
+                  if (ping == undefined){
+                    state.p2score += 1;
+                    Y.one('#score_player1').setContent(state.p1score);
+                    Y.one('#score_player2').setContent(state.p2score);
+                  }
+                }, defaultTimeout);
                 break;
             case right:
-                player1.score += 1;
-                startRound();
+                // set the ping state as undefined
+                pong = undefined;
+                // after 10 miliseconds check if the nothing happened,
+                // only then assume that the other side didn't actually catch it
+                setTimeout(function(){
+                  if (pong == undefined){
+                    state.p1score += 1;
+                    Y.one('#score_player1').setContent(state.p1score);
+                    Y.one('#score_player2').setContent(state.p2score);
+                  }
+                }, defaultTimeout);
                 break;
             case top:
             case bottom:
+                /**
+                 * lets try onesided synchronization
+                 */
+                // if (playerId == 1 && state.syncBlock != undefined){
+                //   send_sync_bounce(this.x + this.xPixelsPerTick, this.y + this.yPixelsPerTick);
+                //   stat.syncBlock = true;
+                //   setTimeout(function(){
+                //     state.syncBlock = undefined;
+                //   }, 20);
+                // }
                 this.reverseY();
                 break;
             }
@@ -154,7 +191,6 @@ YUI().use('node', 'event-custom', function (Y) {
         });
 
         Y.on('arnie:reset', function () {
-            // startRound();
         });
 
         Y.on('mousemove', function (e) {
@@ -185,7 +221,30 @@ YUI().use('node', 'event-custom', function (Y) {
 
     Y.on('domready', function (e) {
         Y.one(window.document).on('click', function () {
-            PONG.game.reset();
+          /* only the first player in the game is allowed to launch the game */
+          /* real programmers don't do this shit, fuck it... if you have any complaints
+           * don't send them to me
+           */
+          if(playerId == 1 && state.p1score < 5 && state.p2score < 5){
+            // PONG.game.reset();
+            PONG.startRound();
+            start_game();
+          }
+          else if(state.p1score == 5){
+            /**
+             * too tired to think of the right way. look... i know it's wrong ok?
+             */
+            if(playerId == 1){
+              $.post('/leader_boards');
+            }
+            alert("Player 1 won");
+          }
+          else if(state.p2score == 5){
+            alert("Player 2 won");
+            if(playerId == 2){
+              $.post('/leader_boards');
+            }
+          }
         });
 
         PONG.game.reset();

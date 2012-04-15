@@ -2,6 +2,7 @@ class QueuesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @messages = Message.order('id desc').limit(10).all
   end
 
   def add

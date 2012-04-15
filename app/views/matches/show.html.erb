@@ -68,8 +68,6 @@ Upgrade your browser!
 
   channel.bind('client-mouse-moved', function(data) {
     /*TODO: check return type of data, but fuck it's 4:30 am i'm not gonna do that now */
-
-          console.log('hello world  ' + playerId);
     if (playerId == 1){
       window.PONG.paddle2.setY(data["y"]);
     }
@@ -78,9 +76,33 @@ Upgrade your browser!
     }
   });
 
+  /**
+   * sync messaes
+   */
+  <%# channel.bind('client-sync-bounce', function(data) { %>
+  <%#   window.PONG.ball.place(data.x, data.y); %>
+  <%# }); %>
+
+  function send_sync_bounce(x,y){
+    if (socketId != null){
+      channel.trigger("client-sync-bounce", {x: x,y: y});
+    }
+  }
+
+
+  channel.bind('client-start-game', function(data) {
+    window.PONG.startRound();
+  });
+
   function send_position(currentY) {
     if (socketId != null){
       channel.trigger("client-mouse-moved", {y: currentY});
+    }
+  }
+
+  function start_game() {
+    if (socketId != null){
+      channel.trigger("client-start-game", {});
     }
   }
 
