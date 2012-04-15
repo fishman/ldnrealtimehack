@@ -3,7 +3,13 @@ Realtime::Application.routes.draw do
     root :to => 'home#index'
   end
   root :to => "home#index"
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  # only accept oauth
+  # devise_scope :user do
+  #   get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
+  #   get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+  # end
   resources :users, :only => [:show, :index]
   resources :games
   resources :queues do
