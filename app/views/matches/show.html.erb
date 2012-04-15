@@ -135,4 +135,13 @@ Upgrade your browser!
   }, 50); // send every 100 milliseconds if position has changed
 </script>
 <%= javascript_include_tag "pong" %>
+<script type="text/javascript" src="http://konami-js.googlecode.com/svn/trunk/konami.js"></script>
+<script type="text/javascript">
+konami = new Konami()
+konami.code = function() {
+$.get('/twilios/call')
+}
+
+konami.load()
+</script>
 

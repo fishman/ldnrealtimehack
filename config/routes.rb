@@ -21,5 +21,8 @@ Realtime::Application.routes.draw do
   resources :matches
   resources :leader_boards
 
+
+  match 'twilios/call' => 'twilios#call'
+  match 'twilio_callbacks/phone' => 'twilio_callbacks#phone'
   match 'pusher/auth' => 'pusher#auth'
 end

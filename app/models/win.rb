@@ -5,4 +5,12 @@ class Win < ActiveRecord::Base
   def reset_count
     self.count = 0
   end
+
+  def text
+    user.name
+  end
+
+  def value
+    count
+  end
 end
