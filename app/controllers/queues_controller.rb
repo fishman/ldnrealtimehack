@@ -17,6 +17,7 @@ class QueuesController < ApplicationController
     if msg[:payload].present? && msg[:payload] != :queue_empty
       match = Match.create(:player1_id => msg[:payload].to_i, :player2_id => current_user.id)
       # redirect_to match_path(:id => match.unique_id)
+        Pusher["private-user-#{msg[:payload].to_i}"].trigger('queue_match', {:match_id => match.unique_id })
       render :js => "window.location.href='#{match_path(:id => match.unique_id)}';"
     else
       # Send the message from the form's input box to the "messages"

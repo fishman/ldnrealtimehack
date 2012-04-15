@@ -7,11 +7,12 @@
     <%= text_field_tag :message %>
     <%= submit_tag "Send" %>
   <% end %>
-  <ul id="content">
-
+  <div class="well" style="overflow:auto; height:200px;">
+  <ul id="content" class="unstyled">
   </ul>
+  </div>
 </div>
-<div class="span5">
+<div class="offset1 span4">
   <div id="add_to_queue">
     <div class="row">
       <%= link_to add_queues_path,:remote=>true do %>
