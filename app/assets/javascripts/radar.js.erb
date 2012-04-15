@@ -1,9 +1,10 @@
+//= require dist/raphael-min
 $(function(){
 	
 	// Demo API key and site token. Data kindly provided by Poolga (poolga.com)
 	// Change these to your own API key and site token.
-	var API_KEY = 'demo';
-	var SITE_TOKEN = 'GSN-181546-E';
+	var API_KEY = 'BZR52ETTYR9WV9NL';
+	var SITE_TOKEN = 'GSN-643227-Z';
 	
 	var visitors = {};
 	
@@ -19,7 +20,7 @@ $(function(){
 	},2000);
 	
 	var raph = Raphael($('#radar-area').get(0),400,400);
-	var img = raph.image(<%= asset_path('sweep.png') %>,-100,-100,600,600);
+	<%# var img = raph.image('sweep.png',-100,-100,600,600); %>
 
 	// Use Raphael to draw the concentric range circles. More efficient than doing them with CSS
 	for(i=1;i<=5;i++){
@@ -38,7 +39,7 @@ $(function(){
 			step:function(){
 				sweepStep(this.a);
 				// Compensation of -.125 to make the image line up with the angle
-				img.rotate(360*(this.a),true);
+				<%# img.rotate(360*(this.a),true); %>
 			},
 			// Call the same function on complete, so the animation loops
 			complete:sweep,

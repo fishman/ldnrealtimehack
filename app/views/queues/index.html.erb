@@ -1,7 +1,7 @@
 <div class="span12">
   <center><h2>Pong waiting room, click below to wait in queue</h2></center>
 </div>
-<div class="span5">
+<div class="span6">
   <h3>Chat</h3>
   <%= form_tag messages_path, :remote => true do %>
     <%= text_field_tag :message %>
@@ -11,10 +11,20 @@
 
   </ul>
 </div>
-<div class="span7">
-  <%= link_to add_queues_path,:remote=>true do %>
-    hello world what's up dude
-  <% end -%>
+<div class="span5">
+  <div id="add_to_queue">
+    <div class="row">
+      <%= link_to add_queues_path,:remote=>true do %>
+        <%= image_tag "queue.jpg" %>
+      <% end -%>
+    </div>
+    <div class="row">
+      <%= link_to "Add to queue", add_queues_path,:remote=>true, :class => "btn" %>
+    </div>
+  </div>
+  <div id="waiting" style="display: none;">
+    <h3>Please wait until we find a partner for you.</h3>
+  </div>
 </div>
 
 <script>
