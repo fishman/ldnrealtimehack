@@ -1,59 +1,80 @@
-h1. Realtime
+h1. Distributed Pong for #ldnrealtime
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
 
 h2. More Information
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-h2. Required Gems
-
-This application requires this gem:
-
-* "rails":http://rubygems.org/gems/rails
+little hack done on the weekend of the 13th
 
 h2. Dependencies
 
 To use this application, you will need:
 
-* The Ruby language (version 1.8.7 or 1.9.2)
-* Rails (version 3.0.4 or newer)
+* The Ruby language 1.9.2 and bundler
+* Rabbitmq
+* A pusher api key
+* postmark api key if you decide to send mails
 
 h2. Installing the Application
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+bc. git clone https://github.com/fishman/ldnrealtimehack
+cd ldnrealtimehack
+gem install bundler
+bundle
+
+h2. Cloudfoundry deploy
+
+# run @rake assets:precompile@
+# comment out the following in the gem file
+bc. # group :assets do
+  # gem 'sass-rails',   '~> 3.1.5'
+  # gem 'coffee-rails', '~> 3.1.1'
+  # gem 'uglifier', '>= 1.0.3'
+# end
+# group :development do
+  # gem 'jquery-rails'
+# end
+# gem "twitter-bootstrap-rails", ">= 2.0.3", :group => :assets 
+# group :test do
+  # gem 'turn', '0.8.2', :require => false
+# end
+# gem "rspec-rails", ">= 2.9.0.rc2", :group => [:development, :test]
+# gem "factory_girl_rails", ">= 3.1.0", :group => [:development, :test]
+# gem "email_spec", ">= 1.2.1", :group => :test
+# gem "guard", ">= 0.6.2", :group => :development
+# case HOST_OS
+  # when /darwin/i
+    # gem 'rb-fsevent', :group => :development
+    # gem 'growl', :group => :development
+  # when /linux/i
+    # gem 'libnotify', :group => :development
+    # gem 'rb-inotify', :group => :development
+  # when /mswin|windows/i
+    # gem 'rb-fchange', :group => :development
+    # gem 'win32console', :group => :development
+    # gem 'rb-notifu', :group => :development
+# end
+# gem "guard-bundler", ">= 0.1.3", :group => :development
+# gem "guard-rails", ">= 0.0.3", :group => :development
+# gem "guard-livereload", ">= 0.3.0", :group => :development
+# gem "guard-rspec", ">= 0.4.3", :group => :development
+
+# @bundle@
+# @vmc update@
+# don't forget to bind your rabbitmq service to the app @vmc bind-service rabbitmq@
 
 h2. Getting Started
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-h2. Documentation and Support
-
-This is the only documentation.
+open two browsers and start playing?
 
 h4. Issues
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-h2. Similar Projects
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-h2. Contributing
-
-If you make improvements to this application, please share with others.
-
-* Fork the project on GitHub.
-* Make your feature addition or bug fix.
-* Commit with Git.
-* Send the author a pull request.
-
-If you add functionality to this application, create an alternative implementation, or build an application that is similar, please contact me and I'll add a note to the README so that others can find your work.
+a lot of them, more than you can imagine
 
 h2. Credits
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+* The canvas and js is based on "camelpunchs pong":http://github.com/camelpunch/pong
 
 h2. License
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Anything you want
