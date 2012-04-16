@@ -67,6 +67,11 @@ h2. Getting Started
 
 open two browsers and start playing?
 
+h2. Why did you use rabbitmq instead of redis and pusher presence channels for matching players up?
+
+Because I wanted to build the frankenstein app of the weekend.
+
+
 h4. Issues
 
 a lot of them, more than you can imagine
@@ -74,6 +79,7 @@ a lot of them, more than you can imagine
 h2. Credits
 
 * The canvas and js is based on "camelpunchs pong":http://github.com/camelpunch/pong
+* "Reza Jelveh aka myself":http://reza.jelveh.me by the way, if you have a room in london don't hesitate to contact me
 
 h2. License
 
